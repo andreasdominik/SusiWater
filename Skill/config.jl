@@ -18,6 +18,10 @@ const LANG = get_language()
 
 # name of entries in config.ini:
 #
+INI_PUMPS = "pumps"
+INI_MINUTES = "minutes"
+INI_ROUNDS = "rounds"
+INI_PAUSE = "pause_minutes"
 
 #
 # link between actions and intents:
