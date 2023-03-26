@@ -63,7 +63,7 @@ function Susi_WaterIfDry_action(topic, payload)
 
     if !isnothing(dry_days) & !isnothing(dry_mm)
         dry_days = tryparse(Int, dry_days)
-        dry_mm = tryparse(Int, dry_mm)
+        dry_mm = tryparse(Float64, dry_mm)
     end
     if isnothing(dry_days) || isnothing(dry_mm)
         run_it = false

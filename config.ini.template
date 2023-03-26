@@ -19,7 +19,36 @@
 #      (maybe not neeeded?)
 #
 [global]
-this_skill_name = TEMPLATE_SKILL
+this_skill_name = SusiWater
+
+# unique IDs for the pumps:
+#
+pumps = pump_left, pump_right
+
+# settings for each pump
+# driver, credentials, and minutes to run:
+#
+pump_left:driver = shelly1, 192.168.0.10, rhasspy, password
+pump_left:minutes = 10
+
+pump_right:driver = shelly1, 192.168.0.11, rhasspy, password
+pump_right:minutes = 10
+
+# pause between pump actions in minutes and number of rounds:
+#
+pause_minutes = 15
+rounds = 2
+
+
+# mm and days to define dry condition for the conditional intent.
+# Irrigation is only started if cummulated precipitation of the last 
+# <days> days is less than <mm> mm.
+# The conditions is only applied, if a weather service is configured
+# in the HermesMQTT config file (WeatherAPI or OpenWeather).
+#
+dry_days = 2
+dry_mm = 5.0
+
 
 
 # These sections are for sentences and sentence snippets
@@ -28,33 +57,19 @@ this_skill_name = TEMPLATE_SKILL
 # publish_say(:skill_echo, "my new skill")
 #
 [de]
-:skill_echo =  Hallo, ich bin die Hermes-Skill
-:slot_echo_1 = der Wert des Slots
-:slot_echo_2 = ist
-:end_say =     das wars
-:ask_echo_slots = soll ich die Slots des Intent aufsagen?
-:no_slots =    der Intent hat keine Slots
+:end_say = fertig
+:start_pump = Ich schalte die Pumpe ein für den 
+:end_pump = Ich schalte die Pumpe aus für den 
+:pump_left = linken Kreislauf
+:pump_right = rechten Kreislauf
 
-# rules to identify falsedetection of intents by the
-# NLU can be added in the section of each language.
-# If the voice command matches one of the rules, it is accepted.
-# Only if it matches none of the rules, the action is aborted
-# because of false detection!
-#
-# SayTime:must_include = spät, ist
-# SayTime:must_chain = spät, es, ist
-# SayTime:must_chain = spät, ist, es
-# SayTime:must_span = spät, bitte
+:no_irrigation_needed = Es ist nicht nötig zu gießen. Es hat genug geregnet in den letzten Tagen.
 
 [en]
-:skill_echo =  hello, i am the Hermes skill
-:slot_echo_1 = the value of the slot
-:slot_echo_2 = is
-:end_say =     and done
-:ask_echo_slots = do you want me to list the slots of this intent?
-:no_slots =    the intent has no slots
+:end_say = done
+:start_pump = I turn on the pump for the
+:end_pump = I turn off the pump for the
+:pump_left = left circuit
+:pump_right = right circuit
 
-# SayTime:must_include = time, is
-# SayTime:must_chain = what, is
-# SayTime:must_span = can, time, (is|is please)
-
+:no_irrigation_needed = No irrigation is needed. It has rained enough in the last days.
