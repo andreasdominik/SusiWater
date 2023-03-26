@@ -42,3 +42,60 @@ function Susi_GiveWater_action(topic, payload)
     publish_end_session(:end_say)
     return true
 end
+
+
+
+"""
+    Susi_WaterIfDry_action(topic, payload)
+
+Run irrigarion as defined in config.ini only if
+there is no rain in the last days.
+"""
+function Susi_WaterIfDry_action(topic, payload)
+
+    print_log("action Susi_WaterIfDry_action() started.")
+    run_it = true
+
+    # read config:
+    #
+    dry_days = get_config(INI_DAYS, multiple=false)
+    dry_mm = get_config(INI_MM, multiple=false)
+
+    if !isnothing(dry_days) & !isnothing(dry_mm)
+        dry_days = tryparse(Int, dry_days)
+        dry_mm = tryparse(Int, dry_mm)
+    end
+    if isnothing(dry_days) || isnothing(dry_mm)
+        run_it = false
+        print_log("dry_days or dry_mm not defined in config.ini")
+    end
+
+    # check weather history in database:
+    #
+    if db_has_entry(:SusiWeather)
+        weather_history = db_read_value(:SusiWeather,:times)
+        
+        if isnothing(weather_history) && length(weather_history) > 0
+            run_it = check_is_dry(weather_history, dry_days, dry_mm)
+            if !run_it
+                print_log("no irrigation needed - enough rain in the last days.")
+                publish_say(:no_irrigation_needed)
+            end
+        else
+            run_it = false
+            print_log("weather history not found in database")
+        end
+    else
+        run_it = false
+        print_log("weather history not found in database")
+    end
+
+    if run_it
+        SusiGiveWater_action(topic, payload)
+    end
+
+    publish_end_session()
+    return true
+end
+
+

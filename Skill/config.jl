@@ -23,6 +23,9 @@ INI_MINUTES = "minutes"
 INI_ROUNDS = "rounds"
 INI_PAUSE = "pause_minutes"
 
+INI_DAYS = "dry_days"
+INI_MM = "dry_mm"
+
 #
 # link between actions and intents:
 # intent is linked to action::Funktion
@@ -30,3 +33,4 @@ INI_PAUSE = "pause_minutes"
 # register_intent_action("TEMPLATE_SKILL", TEMPLATE_INTENT_action)
 # register_on_off_action(TEMPLATE_INTENT_action)
 register_intent_action("Susi:GiveWater", Susi_GiveWater_action)
+register_intent_action("Susi:WaterIfDry", Susi_WaterIfDry_action)
