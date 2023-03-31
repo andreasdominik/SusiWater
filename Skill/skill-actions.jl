@@ -72,7 +72,7 @@ function Susi_WaterIfDry_action(topic, payload)
     if db_has_entry(:SusiWeather)
         weather_history = db_read_value(:SusiWeather, :times)
         
-        if isnothing(weather_history) && length(weather_history) > 0
+        if !isnothing(weather_history) && length(weather_history) > 0
             run_it = check_is_dry(weather_history, dry_days, dry_mm)
             if !run_it
                 print_log("no irrigation needed - enough rain in the last days.")
