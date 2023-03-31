@@ -30,8 +30,6 @@ function Susi_GiveWater_action(topic, payload)
     rounds = get_config(INI_ROUNDS, multiple=false, cast_to=Int, default=1)
     pause_min = get_config(INI_PAUSE, multiple=false, cast_to=Int, default=1)
 
-    println("pumps: $pumps, rounds: $rounds, pause: $pause_min")   
-
     for i in 1:rounds
         for pump in pumps
             one_pump(pump)
