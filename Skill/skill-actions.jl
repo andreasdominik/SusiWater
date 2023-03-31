@@ -44,7 +44,7 @@ function Susi_GiveWater_action(topic, payload)
     end
 
     
-    for i in i:rounds
+    for i in 1:rounds
         for pump in pumps
             one_pump(pump)
             sleep(60 * pause_min)
