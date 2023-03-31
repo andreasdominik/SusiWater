@@ -16,7 +16,7 @@ function one_pump(pump)
     driver = drivers[1]
 
 
-    if driver == shelly1 
+    if driver == "shelly1" 
         ip = drivers[2]
 
         username = password = nothing
