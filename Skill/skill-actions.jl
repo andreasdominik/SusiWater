@@ -28,7 +28,20 @@ function Susi_GiveWater_action(topic, payload)
     #
     pumps = get_config(INI_PUMPS, multiple=true)
     rounds = get_config(INI_ROUNDS, multiple=false)
+    if !isnothing(rounds)
+        rounds = tryparse(Int, rounds)
+    end
+    if isnothing(rounds)
+        rounds = 0
+    end
+
     pause_min = get_config(INI_PAUSE, multiple=false)
+    if !isnothing(pause_min)
+        pause_min = tryparse(Int, pause_min)
+    end
+    if isnothing(pause_min)
+        pause_min = 10
+    end
 
     
     for i in i:rounds
