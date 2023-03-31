@@ -65,6 +65,7 @@ function Susi_WaterIfDry_action(topic, payload)
     if isnothing(dry_days) || isnothing(dry_mm)
         run_it = false
         print_log("dry_days or dry_mm not defined in config.ini")
+        return true
     end
 
     # check weather history in database:
@@ -88,7 +89,7 @@ function Susi_WaterIfDry_action(topic, payload)
     end
 
     if run_it
-        SusiGiveWater_action(topic, payload)
+        Susi_GiveWater_action(topic, payload)
     end
 
     publish_end_session()
