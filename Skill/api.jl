@@ -50,5 +50,7 @@ function check_is_dry(weather_history, dry_days, dry_mm)
         end
     end
 
+    print_log("Cumulative rain last $dry_days days: $cumulative_mm mm, dry is below $dry_mm mm")
+
     return cumulative_mm < dry_mm
 end
