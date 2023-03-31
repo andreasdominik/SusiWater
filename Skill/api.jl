@@ -7,7 +7,8 @@ function one_pump(pump)
 
     # get timing:
     #
-    minutes = get_config("minutes", one_prefix=pump, multiple=false)
+    minutes = get_config("minutes", one_prefix=pump, 
+                         cast_to=Int, default=1)
 
     # get driver:
     #

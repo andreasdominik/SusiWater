@@ -27,23 +27,11 @@ function Susi_GiveWater_action(topic, payload)
     # read config:
     #
     pumps = get_config(INI_PUMPS, multiple=true)
-    rounds = get_config(INI_ROUNDS, multiple=false)
-    if !isnothing(rounds)
-        rounds = tryparse(Int, rounds)
-    end
-    if isnothing(rounds)
-        rounds = 0
-    end
+    rounds = get_config(INI_ROUNDS, multiple=false, cast_to=Int, default=1)
+    pause_min = get_config(INI_PAUSE, multiple=false, cast_to=Int, default=1)
 
-    pause_min = get_config(INI_PAUSE, multiple=false)
-    if !isnothing(pause_min)
-        pause_min = tryparse(Int, pause_min)
-    end
-    if isnothing(pause_min)
-        pause_min = 10
-    end
+    println("pumps: $pumps, rounds: $rounds, pause: $pause_min")   
 
-    
     for i in 1:rounds
         for pump in pumps
             one_pump(pump)
@@ -71,13 +59,9 @@ function Susi_WaterIfDry_action(topic, payload)
 
     # read config:
     #
-    dry_days = get_config(INI_DAYS, multiple=false)
-    dry_mm = get_config(INI_MM, multiple=false)
+    dry_days = get_config(INI_DAYS, cast_to=Int)
+    dry_mm = get_config(INI_MM, cast_to=Float64)
 
-    if !isnothing(dry_days) & !isnothing(dry_mm)
-        dry_days = tryparse(Int, dry_days)
-        dry_mm = tryparse(Float64, dry_mm)
-    end
     if isnothing(dry_days) || isnothing(dry_mm)
         run_it = false
         print_log("dry_days or dry_mm not defined in config.ini")
@@ -86,7 +70,7 @@ function Susi_WaterIfDry_action(topic, payload)
     # check weather history in database:
     #
     if db_has_entry(:SusiWeather)
-        weather_history = db_read_value(:SusiWeather,:times)
+        weather_history = db_read_value(:SusiWeather, :times)
         
         if isnothing(weather_history) && length(weather_history) > 0
             run_it = check_is_dry(weather_history, dry_days, dry_mm)
